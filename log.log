@@ -1,0 +1,10 @@
+main.
+init.
+init_datas.
+VMs:
+-> arch linux
+-> Microsoft Windows
+end init_datas.
+print_base.
+end init.
+begin loop

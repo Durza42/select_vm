@@ -1,4 +1,5 @@
-#if 0
+#if 1
+
 #define _DEBUG
 
 #include <ncurses.h>
@@ -25,6 +26,8 @@ void print_base(const App_datas datas)
     attroff(A_ITALIC);
 
     wmove(stdscr, datas.fields[datas.current_field].y, datas.fields[datas.current_field].x);
+
+    log_msg("print_base.\n");
 }
 
 /**
@@ -34,17 +37,32 @@ void print_base(const App_datas datas)
  */
 void init_datas(App_datas* datas)
 {
+    log_msg("init_datas.\n");
+
     datas -> nb_vms = 0;
 
     /// TODO: remove hardcode; use: environment variables? specific file?
     add_VM(datas, "arch linux\0");
     add_VM(datas, "Microsoft Windows\0");
 
+    log_msg("VMs:\n");
+    for(int i = 0 ; i < datas -> nb_vms ; ++i)
+    {
+        log_msg("-> ");
+        log_msg(datas -> VMs[i].name);
+        log_msg("\n");
+    }
+
+    datas -> nb_fields = 0;
+
     add_field(datas, MSG_first_name_VM_y(stdscr),     MSG_name_VM_x(stdscr) - 2, (int[4]){-1, -1,  1, -1});
     add_field(datas, MSG_first_name_VM_y(stdscr) + 2, MSG_name_VM_x(stdscr) - 2, (int[4]){ 0, -1,  2, -1});
     add_field(datas, MSG_add_VM_y(stdscr),            MSG_add_VM_y(stdscr),      (int[4]){ 1, -1, -1, -1});
 
     datas -> current_field = 0;
+
+    log_msg("end init_datas.\n");
+
 }
 
 /**
@@ -61,13 +79,19 @@ void init(App_datas* datas)
     keypad(stdscr, TRUE);
 //    cbreak();
 
+    log_msg("init.\n");
+
     init_datas(datas);
 
     print_base(*datas);
+
+    log_msg("end init.\n");
 }
 
 int main()
 {
+    log_msg("main.\n");
+
     App_datas datas;
     init(&datas);
 
@@ -75,7 +99,9 @@ int main()
 
 	return 0;
 }
+
 #endif
+#if 0
 
 #include <ncurses.h>
 
@@ -168,3 +194,4 @@ void destroy_win(WINDOW *local_win)
     wrefresh(local_win);
     delwin(local_win);
 }
+#endif

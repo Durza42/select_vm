@@ -51,7 +51,7 @@ bool add_field(App_datas* datas, const int y, const int x, int next[4])
         datas -> fields[datas -> nb_fields].next_id[i] = next[i];
         if(next[i] == -1)
             continue;
-        // if if A goes to B upward, B must goes to A downward.
+        // if A goes to B upward, B must goes to A downward.
         datas -> fields[next[i]].next_id[reverse(i)] = datas -> fields[datas -> nb_fields].id;
     }
 }

@@ -5,5 +5,6 @@
 
 void loop(App_datas* datas);
 void events(App_datas* datas, int i);
+void log_msg(const char* restrict str);
 
 #endif
