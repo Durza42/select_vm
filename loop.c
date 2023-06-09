@@ -5,26 +5,21 @@
 
 #include "loop.h"
 #include "app_data.h"
+#include "events.h"
 #define _DEBUG
 #include "msg.h"
 
 void loop(App_datas* datas)
 {
-    log_msg("begin loop\n");
-
-    int i = 0;
     do
     {
-        ++i;
         refresh();
-        mvprintw(0, 50, "count:%d", i);
-        events(datas, i);
+        events(datas);
         delay_output(50);
     } while(TRUE);
-
 }
 
-void events(App_datas* datas, int i)
+void events(App_datas* datas)
 {
     int ch = getch();
 
@@ -35,27 +30,19 @@ void events(App_datas* datas, int i)
        break;
 
         case KEY_UP:
-            mvprintw(0, 0, "up\n");
-//            datas -> current_field = datas -> fields[datas -> current_field].next_id[UP];
-//            wmove(stdscr, datas -> fields[datas -> current_field].y, datas -> fields[datas -> current_field].x);
+            up(datas);
        break;
 
         case KEY_RIGHT:
-            mvprintw(0, 0, "right\n");
-//            datas -> current_field = datas -> fields[datas -> current_field].next_id[RIGHT];
-//            wmove(stdscr, datas -> fields[datas -> current_field].y, datas -> fields[datas -> current_field].x);
+            right(datas);
        break;
 
         case KEY_DOWN:
-            mvprintw(0, 0, "down\n");
-//            datas -> current_field = datas -> fields[datas -> current_field].next_id[DOWN];
-//            wmove(stdscr, datas -> fields[datas -> current_field].y, datas -> fields[datas -> current_field].x);
+            down(datas);
        break;
 
         case KEY_LEFT:
-            mvprintw(0, 0, "left\n");
-//            datas -> current_field = datas -> fields[datas -> current_field].next_id[LEFT];
-//            wmove(stdscr, datas -> fields[datas -> current_field].y, datas -> fields[datas -> current_field].x);
+            left(datas);
        break;
 
         case 'q':
@@ -73,6 +60,6 @@ void events(App_datas* datas, int i)
 void log_msg(const char* restrict str)
 {
     FILE* log = fopen("log.log", "a");
-    fputs(str, log);
+    fprintf(log, str);
     fclose(log);
 }

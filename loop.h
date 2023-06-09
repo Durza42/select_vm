@@ -4,7 +4,7 @@
 #include "app_data.h"
 
 void loop(App_datas* datas);
-void events(App_datas* datas, int i);
+void events(App_datas* datas);
 void log_msg(const char* restrict str);
 
 #endif

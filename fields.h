@@ -1,3 +1,6 @@
+#ifndef FIELDS_H
+#define FIELDS_H
+
 /// the 4 directions : up(0), right(1), down(2), left(3)
 #define NB_DIRECTIONS 4
 
@@ -32,3 +35,5 @@ struct Field
     /// @brief list of the fields accessible by pressing one of the four direction keys
     int next_id[NB_DIRECTIONS];
 };
+
+#endif

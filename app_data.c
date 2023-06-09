@@ -2,6 +2,7 @@
 #include <ncurses.h>
 #include "app_data.h"
 #include "msg.h"
+#include "loop.h"
 
 /**
  * @brief adds one virtual machine to the list of shown VMs
@@ -21,6 +22,8 @@ bool add_VM(App_datas* datas, char* restrict name)
 
     strncpy(datas -> VMs[datas -> nb_vms].name, name, strlen(name) + 1);
     ++datas -> nb_vms;
+
+    return true;
 }
 
 /**
@@ -35,25 +38,40 @@ bool add_VM(App_datas* datas, char* restrict name)
  * @return true if the field has been successfuly added
  * @return false if an error occured
  */
-bool add_field(App_datas* datas, const int y, const int x, int next[4])
+bool add_field(App_datas* datas, const int y, const int x, int next_id[4])
 {
     if(datas -> nb_fields >= NB_MAX_FIELDS)
         return false;
 
-    ++datas -> nb_fields;
+    const int id_new_field = datas -> nb_fields;
+    ++(datas -> nb_fields);
 
-    datas -> fields[datas -> nb_fields].id = datas -> nb_fields;
-    datas -> fields[datas -> nb_fields].x = x;
-    datas -> fields[datas -> nb_fields].y = y;
+    datas -> fields[id_new_field].id = id_new_field;
+    datas -> fields[id_new_field].x = x;
+    datas -> fields[id_new_field].y = y;
+
+    log_msg("\n##########\n");
+    log_msg("current id: ");
+    char c = '0' + id_new_field;
+    log_msg(&c);
+    log_msg("\nnext_ids : \n");
 
     for(int i = 0 ; i < 4 ; ++i)
     {
-        datas -> fields[datas -> nb_fields].next_id[i] = next[i];
-        if(next[i] == -1)
+        datas -> fields[id_new_field].next_id[i] = next_id[i];
+
+        c = '0' + next_id[i];
+        log_msg(&c);
+        log_msg(" ; ");
+
+        if(next_id[i] == -1)
             continue;
+
         // if A goes to B upward, B must goes to A downward.
-        datas -> fields[next[i]].next_id[reverse(i)] = datas -> fields[datas -> nb_fields].id;
+        datas -> fields[next_id[i]].next_id[reverse(i)] = id_new_field;
     }
+
+    return true;
 }
 
 /**
@@ -66,6 +84,6 @@ int reverse(const int dir)
 {
     if(dir == -1)
         return -1;
-    else
-        return (dir + 2) % 4;
+
+    return (dir + 2) % 4;
 }
