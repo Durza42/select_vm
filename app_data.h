@@ -8,6 +8,9 @@
 
 #include <stdlib.h>
 #include <stdbool.h>
+
+typedef struct App_datas App_datas;
+
 #include "VM.h"
 #include "fields.h"
 
@@ -20,7 +23,6 @@
 /**
  * @brief main datas stored by this application. Using a struct to pass it between functions
  */
-typedef struct App_datas App_datas;
 struct App_datas
 {
     /// @brief list of every VM
@@ -38,7 +40,7 @@ struct App_datas
 };
 
 bool add_VM(App_datas* datas, char* restrict name);
-bool add_field(App_datas* datas, const int y, const int x, int next[4]);
+bool add_field(App_datas* datas, Func* foo, const int y, const int x, int next_id[4]);
 int reverse(const int dir);
 
 #endif

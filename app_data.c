@@ -38,7 +38,7 @@ bool add_VM(App_datas* datas, char* restrict name)
  * @return true if the field has been successfuly added
  * @return false if an error occured
  */
-bool add_field(App_datas* datas, const int y, const int x, int next_id[4])
+bool add_field(App_datas* datas, Func* foo, const int y, const int x, int next_id[4])
 {
     if(datas -> nb_fields >= NB_MAX_FIELDS)
         return false;
@@ -70,6 +70,8 @@ bool add_field(App_datas* datas, const int y, const int x, int next_id[4])
         // if A goes to B upward, B must goes to A downward.
         datas -> fields[next_id[i]].next_id[reverse(i)] = id_new_field;
     }
+
+    datas -> fields[id_new_field].action = foo;
 
     return true;
 }

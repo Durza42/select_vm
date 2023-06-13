@@ -5,6 +5,7 @@
 #include "msg.h"
 #include "loop.h"
 #include "app_data.h"
+#include "actions.h"
 
 /**
  * @brief print the base text of the app : structure, borders, ...
@@ -40,20 +41,21 @@ void init_datas(App_datas* datas)
     add_VM(datas, "Microsoft Windows\0");
     add_VM(datas, "Mac OS X\0");
     add_VM(datas, "Ununtu\0");
-
+/*
     for(int i = 0 ; i < datas -> nb_vms ; ++i)
     {
         log_msg("-> ");
         log_msg(datas -> VMs[i].name);
         log_msg("\n");
     }
- 
+*/
     datas -> nb_fields = 0;
 
     for(int i = 0 ; i < datas -> nb_vms ; ++i)
     {
         add_field(
             datas,
+            &say_hello,
             MSG_first_name_VM_y(stdscr) + 2 * i, // y
             MSG_name_VM_x(stdscr) - 2, // x
             (int[4]){ -1+i, -1, 1+i, -1 } // { up, right, down, left }
@@ -62,6 +64,7 @@ void init_datas(App_datas* datas)
  
     add_field(
         datas,
+        &do_nothing,
         MSG_add_VM_y(stdscr),
         MSG_add_VM_x(stdscr),
         (int[4]){ 2, -1, -1, -1});

@@ -55,3 +55,12 @@ void left(App_datas* datas)
     wmove(stdscr, datas -> fields[datas -> current_field].y, datas -> fields[datas -> current_field].x);
 }
 
+/**
+ * @brief what is done when the return key is pressed
+ * @details launch the function binded to the currenty selected field
+ */
+void enter(App_datas* datas)
+{
+    (*(datas -> fields[datas -> current_field].action))(datas);
+}
+

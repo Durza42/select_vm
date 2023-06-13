@@ -1,5 +1,5 @@
 /.cph
 /.vscode
-/.log.log
-/.main.elf
+*.log
+.elf
 /.build

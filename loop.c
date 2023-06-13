@@ -45,6 +45,11 @@ void events(App_datas* datas)
             left(datas);
        break;
 
+        // ncurses's constant for return key is only for numeric keypad
+        case '\n':
+            enter(datas);
+       break;
+
         case 'q':
             mvprintw(0, 0, "Quit\n");
             endwin();
